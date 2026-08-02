@@ -9,7 +9,7 @@ function App() {
   return (
     <>
       <h1 className="title">STOP!, before you send!</h1>
-      <h2 className="message">Type under here before you send any message</h2>
+      <h2 className="instruction">Type under here before you send any message</h2>
       <div className="inputArea">
           <textarea className='message'></textarea>
           <br/>
