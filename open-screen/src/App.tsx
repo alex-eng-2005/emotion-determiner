@@ -1,7 +1,5 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
+import { useNavigate } from "react-router-dom"
 import './App.css'
 
 function App() {
@@ -11,6 +9,8 @@ function App() {
   const [result, setResult] = useState("");
   //Loading screen
   const [loading, setLoading] = useState(false);
+  //Navigates
+  const navigate = useNavigate();
   //Function 
   async function sendMessage()
   {
@@ -40,8 +40,13 @@ function App() {
 
       //Gets the data
       const data = await response.json();
+      //Sets the results to be the variable
       setResult(data.emotion[0]);
+      //Sets the loading to false
       setLoading(false);
+      console.log(result);
+      //Navigates to the next
+      navigate("/results", {state: {emotion: result}});
     }
     catch(error)
     {
