@@ -1,0 +1,16 @@
+table, tr, td
+{
+    border: 3px solid black;
+    border-collapse: collapse;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: black;
+}
+
+table
+{
+    box-shadow: 5px 5px 0px 0px black;
+}
+
+td{
+    width: 50%;
+}

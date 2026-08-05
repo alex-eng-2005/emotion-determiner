@@ -40,13 +40,18 @@ function App() {
 
       //Gets the data
       const data = await response.json();
+      //My Emotion
+      const emotion = data.userEmotions[0];
+      //Sarcasm
+      const sarcasm = data.userEmotions[1];
+      console.log(emotion)
+      console.log(sarcasm)
       //Sets the results to be the variable
-      setResult(data.emotion[0]);
+      setResult("Done");
       //Sets the loading to false
       setLoading(false);
-      console.log(result);
       //Navigates to the next
-      navigate("/results", {state: {emotion: result}});
+      navigate("/results", {state: {userEmotion: [emotion, sarcasm]}});
     }
     catch(error)
     {

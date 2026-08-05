@@ -15,7 +15,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-emotionDectector = pipeline("sentiment-analysis", model="SamLowe/roberta-base-go_emotions")
+
+#Emotion and sarcasm model
+emotionDectector = pipeline("text-classification", model="SamLowe/roberta-base-go_emotions")
+sarcasmModel = pipeline("text-classification", model="cardiffnlp/twitter-roberta-base-irony")
 
 #Defines the expected JSON FORMAT
 class Message(BaseModel):
@@ -23,17 +26,21 @@ class Message(BaseModel):
     
 #My message
 def myMessage(thisMessage):
-    return emotionDectector(thisMessage)
+    return emotionDectector(thisMessage, top_k=None)
+
+#Sarcasm Model
+def sarcasmResults(thisMessage):
+    return sarcasmModel(thisMessage, top_k=None)
 
 #Endpoint that React will call
 @app.post("/analyze")
 def analyze(message: Message):
-    #Get the user's text
-    user_text = myMessage(message.text)
-    emotion = []
-    for user in user_text:
-        emotion.append(user["label"])
-        
-    return {"emotion": emotion}
+    #Have these models set
+    emotion = myMessage(message.text)
+    sarcasm = sarcasmResults(message.text)
+    
+    #Sarcasm model
+    print(sarcasm)
+    return {"userEmotions": [emotion, sarcasm]}
     
 
