@@ -50,8 +50,8 @@ export default function Results()
                 </tr>
                 
                 {sarcasm.map((e : Emotion) => (
-                    <tr key={e.label == "LABEL_0" ? "Not Sarcastic" : "Sarcastic"}>
-                        <td>{e.label == "LABEL_0" ? "Not Sarcastic" : "Sarcastic"}</td>
+                    <tr key={e.label == "non_irony" ? "Not Sarcastic" : "Sarcastic"}>
+                        <td>{e.label == "non_irony" ? "Not Sarcastic" : "Sarcastic"}</td>
                         <td>{e.score.toFixed(3)}</td>
                     </tr>
                 ))}

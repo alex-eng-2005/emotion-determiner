@@ -3,6 +3,10 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
+#Emotion and sarcasm model
+emotionDectector = pipeline("text-classification", model="SamLowe/roberta-base-go_emotions")
+sarcasmModel = pipeline("text-classification", model="cardiffnlp/twitter-roberta-base-irony")
+
 app = FastAPI()
 
 #Allow your React app to communicate with Python
@@ -15,10 +19,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-#Emotion and sarcasm model
-emotionDectector = pipeline("text-classification", model="SamLowe/roberta-base-go_emotions")
-sarcasmModel = pipeline("text-classification", model="cardiffnlp/twitter-roberta-base-irony")
 
 #Defines the expected JSON FORMAT
 class Message(BaseModel):
@@ -34,6 +34,7 @@ def sarcasmResults(thisMessage):
 
 #Endpoint that React will call
 @app.post("/analyze")
+
 def analyze(message: Message):
     #Have these models set
     emotion = myMessage(message.text)
