@@ -1,3 +1,3 @@
 @echo off
-wsl -d 
+wsl -d "Enter info here"
 pause
