@@ -1,3 +1,3 @@
 @echo off
-wsl -d "Enter info here"
+wsl -d Ubuntu-24.04 -u root su - "username and location"
 pause

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import Emotion from "../Responses/Emotion.tsx"
+import Grammar from "../Responses/Grammar.tsx";
 import { useNavigate } from 'react-router-dom';
 
 function App() {
@@ -9,10 +10,10 @@ function App() {
   //Loading screen
   const [loading, setLoading] = useState(false);
   //User chooses what they want to look for
-  const [option, setOption] = useState("emotion");
+  const [option, setOption] = useState("emotionResults");
   //Sends the messages between the two function
   const navigate = useNavigate();
- 
+
   //Helps sends a message
   async function sendMessage()
   {
@@ -20,16 +21,17 @@ function App() {
     {
       //Sets the loading
       setLoading(true);
-      if(option == "emotion")
+      if(option == "emotionResults")
       {
         //Do sends the data
         const howTheUserFeeling = await Emotion(message);
         //Navigates
-        navigate("/emotionResults", {state: {userEmotion: howTheUserFeeling}});
+        navigate(`/${option}`, {state: {userEmotion: howTheUserFeeling}});
       }
       else
       {
-        console.log("There is no emotion");
+        const correctGrammar = await Grammar(message, option);
+        navigate(`/grammerResults`, {state: {grammarCorrect: correctGrammar}});
       }
       //Sets the loading to false
       setLoading(false);
@@ -47,8 +49,10 @@ function App() {
 
       <label htmlFor='Emotion'>Choose an option:</label>
       <select value={option} onChange={(e)=>setOption(e.target.value)}>
-        <option value="emotion">Emotions</option>
+        <option value="emotionResults">Emotions</option>
         <option value="grammar">Grammar</option>
+        <option value="fixSentenceWords">Stronger Words</option>
+        <option value="strongerSentence">Stronger Sentence</option>
       </select>
 
       <h2>{loading ? "Loading" : ""}</h2>
@@ -57,6 +61,7 @@ function App() {
           <br/>
           <button className='enter' onClick={()=>sendMessage()}>Enter</button>
       </div>
+      
     </>
   )
 }

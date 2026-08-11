@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 #Emotion and sarcasm model
-emotionDectector = pipeline("text-classification", model="SamLowe/roberta-base-go_emotions")
+emotionDetector = pipeline("text-classification", model="SamLowe/roberta-base-go_emotions")
 sarcasmModel = pipeline("text-classification", model="cardiffnlp/twitter-roberta-base-irony")
 
 app = FastAPI()
@@ -13,8 +13,8 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173",
-                    "http://127.0.0.1:5173",
-                    "http://192.168.56.1:5173",],
+                    "http://10.255.255.254:5173",
+                    "http://172.24.5.62:5173",],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -26,7 +26,7 @@ class Message(BaseModel):
     
 #My message
 def myMessage(thisMessage):
-    return emotionDectector(thisMessage, top_k=None)
+    return emotionDetector(thisMessage, top_k=None)
 
 #Sarcasm Model
 def sarcasmResults(thisMessage):

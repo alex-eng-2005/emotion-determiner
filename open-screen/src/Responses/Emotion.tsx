@@ -1,9 +1,10 @@
 export default async function Emotion(message : String)
 {
-  
+  try
+  {
     //Sends a response
       const response = await fetch(
-        "http://192.168.56.1:8000/analyze",
+        "http://localhost:8000/analyze",
         {
           method: "POST",
           headers: {
@@ -29,4 +30,9 @@ export default async function Emotion(message : String)
       const sarcasm : JSON = data.userEmotions[1];
 
       return [emotion, sarcasm]
+    }
+    catch (error)
+    {
+      return undefined
+    }
 }
